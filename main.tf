@@ -80,7 +80,7 @@
     }  
 
     # Allow all outbound requests
-    ingress {
+    egress {
         from_port = 0
         to_port = 0
         protocol = "-1"
