@@ -10,7 +10,7 @@
         user_data = <<-EOF
                     #!/bin/bash
                     echo "Hello, World" > index.html
-                    nohup busybox httpd -f -p 8080 &
+                    nohup busybox httpd -f -p ${var.server_port} &
                     EOF
 
         tags = {
@@ -25,8 +25,8 @@
         default = 8080
     }
 
-resource "aws_security_group" "instance" {
-    name = "terraform-warmup-instance"
+    resource "aws_security_group" "instance" {
+        name = "terraform-warmup-instance"
 
     ingress {
         from_port = var.server_port
@@ -36,3 +36,8 @@ resource "aws_security_group" "instance" {
     }
   
 }
+
+    output "public_ip" {
+      value = aws_instance.warmup.public_ip
+      description = "The public IP address of the web server"
+    }
